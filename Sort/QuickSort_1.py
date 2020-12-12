@@ -39,11 +39,35 @@ class QuickSort:
             if index < high-1:
                 self.bigR(Array, index+1, high)
 
+    # 挑选法
+    def samllLoapPick(self, Array, low, high):
+        if low < high:
+            index = low - 1
+            privix = Array[high]
+
+            for i in range(low, high):
+                if Array[i] < privix:
+                    index += 1
+                    Array[index], Array[i] = Array[i], Array[index]
+            
+            low = index + 1
+            Array[low], Array[high] = Array[high], Array[low]
+
+        return low
+
+    def bigPick(self, Array, low, high):
+        if low < high:
+            index = self.samllLoapPick(Array, low, high)
+            if low < index:
+                self.bigPick(Array, low, index-1)
+            if high > index:
+                self.bigPick(Array, index+1, high)
 
 a = [12,65,23,76,4,98]
 print(a)
 
 qSort = QuickSort()
-qSort.bigR(a, 0, len(a)-1)
+# qSort.bigR(a, 0, len(a)-1)
+qSort.bigPick(a, 0, len(a)-1)
 
 print(a)
